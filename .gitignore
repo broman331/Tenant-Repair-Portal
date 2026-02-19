@@ -1,6 +1,35 @@
+# Dependencies
 node_modules/
+
+# Build output
 dist/
+*.tsbuildinfo
+
+# Playwright
 test-results/
 playwright-report/
 blob-report/
-*.tsbuildinfo
+playwright/.cache/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+npm-debug.log*
+
+# Docker (optional local volumes)
+docker-data/
