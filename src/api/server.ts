@@ -17,6 +17,8 @@
 import express, { type Request, type Response } from 'express';
 import cors from 'cors';
 import { v4 as uuidV4 } from 'uuid';
+import path from 'path';
+import fs from 'fs';
 
 const API_PORT = Number(process.env['API_PORT']) || 4000;
 const FRONTEND_ORIGIN = process.env['FRONTEND_ORIGIN'] || 'http://localhost:3000';
@@ -312,6 +314,22 @@ app.delete('/api/workers/:id', (req: Request, res: Response) => {
 
     res.json({ status: 'deleted', message: 'Worker removed successfully' });
 });
+
+// -------------------------------------------------------------------
+// Static File Serving (Production — built frontend from dist/)
+// -------------------------------------------------------------------
+const distPath = path.resolve(import.meta.dirname ?? __dirname, '../../dist');
+
+if (fs.existsSync(distPath)) {
+    app.use(express.static(distPath));
+
+    // SPA fallback — serve index.html for all non-API routes
+    app.get('*', (_req: Request, res: Response) => {
+        res.sendFile(path.join(distPath, 'index.html'));
+    });
+
+    console.log(`📁 Serving static frontend from ${distPath}`);
+}
 
 // -------------------------------------------------------------------
 // Server Start

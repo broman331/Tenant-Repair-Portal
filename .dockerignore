@@ -1,0 +1,11 @@
+node_modules
+dist
+test-results
+playwright-report
+blob-report
+*.tsbuildinfo
+.git
+.gitignore
+.dockerignore
+README.md
+LICENSE

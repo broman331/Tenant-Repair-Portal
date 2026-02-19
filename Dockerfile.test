@@ -1,0 +1,19 @@
+# =============================================================================
+# Playwright Test Runner Image
+# =============================================================================
+FROM mcr.microsoft.com/playwright:v1.50.1-noble
+
+WORKDIR /app
+
+# Install dependencies
+COPY package.json package-lock.json ./
+RUN npm ci
+
+# Copy source and test files
+COPY . .
+
+# Install Playwright browsers
+RUN npx playwright install chromium
+
+# Run tests
+CMD ["npx", "playwright", "test"]
